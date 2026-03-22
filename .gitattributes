@@ -1,0 +1,1 @@
+dados/votacao_candidato_munzona_2022_SP.csv filter=lfs diff=lfs merge=lfs -text
