@@ -45,24 +45,28 @@ Observação importante:
 
 ## Requisitos
 
-O projeto foi escrito em Python e usa principalmente:
+O projeto foi escrito em Python e as dependências estão listadas em `requirements.txt`.
 
-- `pandas`
-- `numpy`
-- `statsmodels`
-- `matplotlib`
-- `seaborn`
-- `openpyxl`
-- `xlrd`
-- `requests`
+## Execução simplificada do notebook
 
-Exemplo de instalação em ambiente virtual:
+Depois de clonar o repositório, o fluxo recomendado é:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install pandas numpy statsmodels matplotlib seaborn openpyxl xlrd requests
+chmod +x setup_notebook.sh abrir_notebook.sh
+./setup_notebook.sh
+./abrir_notebook.sh
 ```
+
+O script `setup_notebook.sh`:
+
+- cria o ambiente virtual `.venv`;
+- instala as dependências de `requirements.txt`;
+- registra um kernel Jupyter chamado `Python (TNA5373)`;
+- executa `git lfs pull` se o Git LFS estiver disponível, para baixar o CSV grande.
+
+Depois disso, o script `abrir_notebook.sh` abre diretamente o arquivo `analise_emendas_apresentacao_final.ipynb`.
+
+Se o Jupyter pedir a escolha de kernel, selecione `Python (TNA5373)`.
 
 ## Como executar
 
@@ -82,11 +86,15 @@ O script:
 - gera gráficos exploratórios;
 - estima uma regressão logística simples para probabilidade de receber emenda.
 
-## Notebook
+## Execução manual alternativa
 
-Para exploração interativa:
+Se preferir fazer sem os scripts:
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m ipykernel install --user --name tna5373 --display-name "Python (TNA5373)"
 jupyter notebook analise_emendas_apresentacao_final.ipynb
 ```
 
