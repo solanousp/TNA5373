@@ -1,17 +1,27 @@
-import requests
 import json
+import os
 
-TOKEN = "4e020489d3ae1d9c550c6bff6f88ea9e"
+import requests
+
+TOKEN = os.getenv("PORTAL_TRANSPARENCIA_TOKEN")
+
+
+def obter_headers():
+    if not TOKEN:
+        raise RuntimeError(
+            "Defina a variável de ambiente PORTAL_TRANSPARENCIA_TOKEN antes de executar busca_api.py."
+        )
+    return {
+        "chave-api-dados": TOKEN,
+        "Accept": "application/json",
+    }
 
 def testar_formato_exato():
     """
     Testa o formato exato do e-mail
     """
     # Formato 1: Como está no e-mail (array com objeto)
-    auth_json = [{"key": "chave-api-dados", "value": TOKEN}]
-    
-    # Converter para o formato que o requests espera
-    headers = {auth_json[0]["key"]: auth_json[0]["value"]}
+    headers = obter_headers()
     
     print("🔍 TESTANDO COM O FORMATO EXATO DO E-MAIL")
     print("="*60)
@@ -59,10 +69,7 @@ def testar_com_accept_header():
     """
     Testa adicionando o header Accept como no exemplo Java
     """
-    headers = {
-        "chave-api-dados": TOKEN,
-        "Accept": "application/json"
-    }
+    headers = obter_headers()
     
     print("\n" + "="*60)
     print("🔍 TESTANDO COM HEADER ACCEPT (como no Java)")
